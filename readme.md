@@ -18,6 +18,8 @@
 
    Note: You could say that let this loop run infinetely, untill it matches, but it is an bad idea as we dont what breaks the code, and it ends up using the all the resources, leading to total shutdown of mac, so connection would be ended, based on log values, the error could be identified, and rerurn the code.
 
+Also generated random 1kb file from the server side is also added into the repo.
+
 Reference:
 
 1. https://www.youtube.com/watch?v=eGz9DS-aIeY&ab_channel=NetworkChuck
