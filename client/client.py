@@ -1,6 +1,7 @@
 import socket
 import hashlib
 import sys
+import time  
 
 def get_checksum(connection_socket):
     # Get the checksum code from server
@@ -19,9 +20,10 @@ def calc_checksum(filename):
     # Calculating the checksum value using the md5 algorithm
     file_hasher = hashlib.md5()
     with open(filename, "rb") as file:
-        for data_chunk in iter(lambda: file.read(4096), b""):
+        for data_chunk in iter(lambda: file.read(4096), b""):  # Corrected variable name
             file_hasher.update(data_chunk)
     return file_hasher.hexdigest()
+
 
 def connect_to_server(server_address, server_port):
     # Connecting to the server
@@ -40,14 +42,18 @@ def connect_to_server(server_address, server_port):
             print(f"Checksum is correct and the file is received: {computed_checksum}")
         else:
             print(f"Checksum mismatch: expected {received_checksum}, got {computed_checksum}")
+        
+        # Shutdown after 5 mins
+        print("Waiting for 5 minutes before shutting down...")
+        time.sleep(300)  
+
     except Exception as e:
         print(f"An error occurred: {e}")
     finally:
         connection_socket.close()
 
 if __name__ == "__main__":
-    # Default server address and port or get from command line arguments
+    
     server_address = sys.argv[1] if len(sys.argv) == 3 else "172.17.0.2"
     server_port = sys.argv[2] if len(sys.argv) == 3 else 8000
     connect_to_server(server_address, server_port)
-
